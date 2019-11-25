@@ -1,4 +1,5 @@
 import math
+import cmath
 from random import randint
 import timeit
 
@@ -37,7 +38,6 @@ def task2():
 # Третье задание - ряд Тейлора
 
 def my_cos(x, n = 30):
-    x = x / 180 * math.pi
 
     q = 1
     s = 0
@@ -50,7 +50,6 @@ def my_cos(x, n = 30):
 
 
 def my_sin(x, n = 30):
-    x = x / 180 * math.pi
 
     q = x
     s = 0
@@ -77,3 +76,17 @@ def my_exp(x, n = 30):
         s += x ** i / math.factorial(i)
 
     return s
+
+def task3():
+    mc = my_cos(math.radians(60))
+    ms = my_sin(math.radians(45))
+    mln = my_ln(0.5)
+    mex = my_exp(0.2)
+    print("my_cos(60): " + str(mc) + ", math.cos(60): " + str(math.cos(math.radians(60))) + ", difference is: " + str(abs(math.cos(math.radians(60)) - mc)))
+    print("my_sin(45): " + str(ms) + ", math.sin(45): " + str(math.sin(math.radians(45))) + ", difference is: " + str(abs(math.sin(math.radians(45)) - ms)))
+    print("my_ln(0.5): " + str(mln) + ", math.ln(0.5): " + str(math.log(0.5, math.e)) + ", difference is: " + str(abs(math.log(0.5, math.e) - mln)))
+    print("my_exp(0.2): " + str(mex) + ", math.exp(0.2): " + str(math.exp(0.2)) + ", difference is: " + str(abs(math.exp(0.2) - mex)))
+
+    cx = complex(2, 3)
+    mc = my_cos(cmath.phase(cx))
+    print("my_cos from complex number", cx,": ", mc, " math.cos", cx, ": ", math.cos(cmath.phase(cx)), ", difference is: ", abs(mc - math.cos(cmath.phase(cx))))

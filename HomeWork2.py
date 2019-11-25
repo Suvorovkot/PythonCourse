@@ -30,15 +30,18 @@ def pascal_triangle(n, step = 1):
     for j in range(0, n, step):
         print(result[j])
 
+def task2():
+    pascal_triangle(10, 2)
+
 
 # Третье задание - произвольное число произвольных аргументов
 
-def task3(*args):
+def multiargs_fun(*args):
     c = collections.Counter()
     for v in args:
         c[type(v)] += 1
     print(dict(c))
 
-
-# Четвертое задание - тригонометрические (и не только) функции
+def task3():
+    multiargs_fun("Dva", "Tri", "Derevo?", 2, 0, 6, 2, 0, 6, 3.0, 5.6)
 
