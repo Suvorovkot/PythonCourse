@@ -1,4 +1,5 @@
-from random import uniform
+from random import uniform, randint
+from functools import reduce
 
 
 # Первое задание - температуры
@@ -16,6 +17,7 @@ def task1():
     print("Celsius finish values:", temperatures1)
     print("Differeces:", list(map(lambda x, y: abs(x - y), temperatures1, temperatures)))
 
+
 # Второе задание - новый словарь с элементами исходного
 
 def dict_filter(d):
@@ -23,3 +25,17 @@ def dict_filter(d):
 def task2():
     d = {'x':2, 4:'y', 4.0:'12', '3':'fdfs', 'a':9., b'pp':52}
     print(dict_filter(d))
+
+
+# Третье задание - умножение массивов монадами
+
+def list_prod(a,b):
+    return reduce(lambda x, y: x * y, list(map(lambda t: t[0] + t[1], list(zip(a, b[::-1])))))
+def task3():
+    n = randint(4,8)
+    a, b = list(), list()
+    for __ in range(n):
+        a.append(randint(1,10))
+        b.append(randint(1,10))
+    print(list_prod(a, b))
+task3()
