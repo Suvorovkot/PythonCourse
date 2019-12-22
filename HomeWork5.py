@@ -4,30 +4,30 @@ from scipy.integrate import odeint
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from PIL import Image
 
-
 # define the fonts to use for plots
 
 
 title_font = fm.FontProperties(family='DejaVu Sans', style='normal', size=20, weight='normal', stretch='normal')
 
-save_folder = 'C:/Users/Pavel/Desktop/images1'
+print("Please input directory to save gif with attractor")
+save_folder = str(input())  
 if not os.path.exists(save_folder):
     os.makedirs(save_folder)
-
 
 # define the initial system state (aka x, y, z positions in space)
 initial_state = [0., 1., 1.01]
 
 # define the system parameters sigma, rho, and beta
 sigma = 10.
-rho   = 28.
-beta  = 2.667
+rho = 28.
+beta = 2.667
 
 # define the time points to solve for, evenly spaced between the start and end times
 start_time = 0
 end_time = 100
 interval = 100
 time_points = np.linspace(start_time, end_time, end_time * interval)
+
 
 def lorenz_system(current_state, t):
     x, y, z = current_state
@@ -56,11 +56,13 @@ def plot_lorenz(xyz, n):
     plt.savefig('{}/{:03d}.png'.format(save_folder, n), dpi=60, bbox_inches='tight', pad_inches=0.1)
     plt.close()
 
+
 # return a list in iteratively larger chunks
 def get_chunks(full_list, size):
     size = max(1, size)
     chunks = [full_list[0:i] for i in range(1, len(full_list) + 1, size)]
     return chunks
+
 
 # get incrementally larger chunks of the time points, to reveal the attractor one frame at a time
 chunks = get_chunks(time_points, size=20)
@@ -73,18 +75,18 @@ for n, point in enumerate(points):
     plot_lorenz(point, n)
 
 # create a tuple of display durations, one for each frame
-first_last = 100 #show the first and last frames for 100 ms
-standard_duration = 10 #show all other frames for 10 ms
+first_last = 100  # show the first and last frames for 100 ms
+standard_duration = 10  # show all other frames for 10 ms
 durations = tuple([first_last] + [standard_duration] * (len(points) - 2) + [first_last])
 
 # load all the static images into a list
 images = [Image.open(image) for image in glob.glob('{}/*.png'.format(save_folder))]
-gif_filepath = 'C:/Users/Pavel/Desktop/images1/animated-lorenz-attractor.gif'
+gif_filepath = save_folder + '/animated-lorenz-attractor.gif'
 
 # save as an animated gif
 gif = images[0]
-gif.info['duration'] = durations #ms per frame
-gif.info['loop'] = 0 #how many times to loop (0=infinite)
+gif.info['duration'] = durations  # ms per frame
+gif.info['loop'] = 0  # how many times to loop (0=infinite)
 gif.save(fp=gif_filepath, format='gif', save_all=True, append_images=images[1:])
 
 # verify that the number of frames in the gif equals the number of image files and durations
